@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta charset="UTF-8">
+<title>Trinetra Presentation</title>
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    line-height: 1.6;
+}
+.card {
+    position: relative;
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    width: 260px;
+    font-size: 17px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transition: 0.3s;
+    z-index: 1;
+}
+
+/* SOFT SPARKLE BORDER */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    background: linear-gradient(
+        120deg,
+        rgba(255,120,120,0.3),
+        rgba(255,0,0,0.2),
+        rgba(255,120,120,0.3)
+    );
+    background-size: 200%;
+    animation: sparkleBorder 6s linear infinite;
+    z-index: -1;
+}
+
+/* INNER CLEAN LAYER */
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: white;
+    border-radius: 12px;
+    z-index: -1;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* ANIMATION */
+@keyframes sparkleBorder {
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
+}
+
+/* CANVAS BACKGROUND */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -2;
+}
+
+/* HEADER */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.header img { height: 50px; }
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #c0392b;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 40px;
+}
+
+.hero h1 {
+    color: #c0392b;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+/* PPT */
+.ppt-wrapper {
+    width: 85%;
+    margin: auto;
+    aspect-ratio: 16/9;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    background: white;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* CONTENT */
+.content {
+    padding: 80px;
+}
+
+/* SECTION */
+.section {
+    margin-bottom: 100px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.6s ease;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section h2 {
+    color: #c0392b;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.section p {
+    font-size: 18px;
+}
+
+/* MOBILE TEAM PERFECT CENTER FIX */
+@media (max-width: 768px) {
+
+    .team-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+    }
+
+    /* ALL MEMBERS CENTER */
+    .member {
+        width: 90%;
+        max-width: 260px;
+        text-align: center;
+    }
+
+    /* LEADER ALWAYS FIRST */
+    .member.center {
+        order: -1;
+        transform: scale(1.1);
+        margin-bottom: 20px;
+        align-self: center;
+    }
+
+}
+/* CARDS */
+/* CARDS GRID (PERFECT ALIGNMENT) */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    justify-items: center;
+}
+/* MOBILE */
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    width: 260px;
+    font-size: 17px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* TABLE */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1200px;
+}
+
+th {
+    background: #fbe9e9;
+    color: #c0392b;
+    padding: 14px;
+    font-size: 16px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 15px;
+}
+
+tr:hover {
+    background: #fff5f5;
+}
+
+/* LIST */
+ul {
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #c0392b;
+}
+
+/* TEAM SECTION */
+.team {
+    text-align: center;
+}
+
+/* GRID */
+.team-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+/* NORMAL MEMBER */
+.member {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.member:hover {
+    transform: translateY(-10px);
+}
+
+/* CENTER MEMBER (YOU) */
+.member.center {
+    transform: scale(1.15);
+    border: 2px solid #c0392b;
+}
+
+/* IMAGE */
+.member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* TEXT */
+.member h3 {
+    margin: 5px 0;
+    font-size: 20px;
+    color: #c0392b;
+}
+
+.member p {
+    font-size: 14px;
+    color: #666;
+}
+/* ICON STYLE */
+.icon {
+    font-size: 30px;
+    color: #c0392b;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+    from {opacity:0; transform: translateY(40px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- HEADER -->
+<div class="header">
+
+    <a href="index.html">
+        <img src="trinetra_logo.png" style="cursor:pointer;">
+    </a>
+
+    <div class="title">TRINETRA</div>
+
+    <a href="qa.html">
+        <img src="university_logo.png" style="cursor:pointer;">
+    </a>
+
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<h1> Smart AI-Based Secure Examination Platform</h1>
+</div>
+
+<!-- PPT -->
+<div class="ppt-wrapper">
+<iframe src="https://1drv.ms/p/c/4933028ce2d506bc/IQShrrZYKXLdSamYlAUitsn2AcuURfSU_RTd702Z_G9nazw?em=2"></iframe>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<div class="section">
+<h2>Problem Statement</h2>
+<p>
+Modern exams face AI-based cheating, browser extensions misuse, paper leakage risks, and lack of accessibility. 
+Current systems only monitor students instead of preventing cheating.
+</p>
+</div>
+<div class="section">
+<h2>Our Solution - Trinetra</h2>
+
+<div class="cards">
+
+<div class="card">
+<i class="fas fa-robot icon"></i>
+AI Cheating Detection
+</div>
+
+<div class="card">
+<i class="fas fa-shield-alt icon"></i>
+System-Level Security
+</div>
+
+<div class="card">
+<i class="fas fa-eye-slash icon"></i>
+Blind Mode (Accessibility)
+</div>
+
+<div class="card">
+<i class="fas fa-globe icon"></i>
+Offline Exam Mode
+</div>
+
+<div class="card">
+<i class="fas fa-brain icon"></i>
+AI Paper Generation
+</div>
+
+<div class="card">
+<i class="fas fa-heartbeat icon"></i>
+Stress Monitoring
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>Comparison</h2>
+
+<div class="table-container">
+<table>
+
+<tr>
+<th>Feature</th>
+<th>Mettl</th>
+<th>ProctorU</th>
+<th>Examity</th>
+<th>Honorlock</th>
+<th>Eklavvya</th>
+<th>Talview</th>
+<th>ExamOnline</th>
+<th>Trinetra</th>
+</tr>
+
+<tr><td>Webcam Monitoring</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>AI Proctoring</td><td>✅</td><td>✅</td><td>Partial</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Extension Detection</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr>
+<tr><td>Offline Mode</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr>
+<tr><td>Blind Mode</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr>
+<tr><td>Stress Monitoring</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr>
+<tr><td>AI Paper Generation</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr>
+
+</table>
+</div>
+</div>
+
+<div class="section">
+<h2>Innovation & Impact</h2>
+
+<p>
+Trinetra is not just a monitoring system — it is a complete examination ecosystem designed for the future.
+</p>
+
+<ul>
+<li>Prevents cheating instead of detecting it</li>
+<li>Supports visually impaired students</li>
+<li>Works without internet</li>
+<li>AI-based dynamic paper generation</li>
+<li>Zero paper leakage</li>
+</ul>
+
+<p><b>Main Goal:</b>  
+To create a secure, fair, and inclusive examination system.</p>
+
+</div>
+
+</div>
+
+<div class="section team">
+<h2>Our Team</h2>
+
+<div class="team-grid">
+
+<!-- LEFT SIDE -->
+<div class="member">
+<img src="ayush.png">
+<h3>Panchani Ayush</h3>
+
+</div>
+
+<div class="member">
+<img src="mantra.png">
+<h3>Zalavadiya Mantra</h3>
+
+</div>
+
+<!-- CENTER (YOU) -->
+<div class="member center">
+<img src="anjan.jpg">
+<h3>Aghera Anjan</h3>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="member">
+<img src="mahek.jpeg">
+<h3>Bathani Mahek</h3>
+</div>
+
+<div class="member">
+<img src="kavy.jpeg">
+<h3>Nandha Kavy</h3>
+
+</div>
+
+</div>
+
+</div>
+<!-- FOOTER -->
+<div class="footer">
+Building the Future of Examinations
+</div>
+
+<script>
+
+/* SCROLL ANIMATION */
+const sections = document.querySelectorAll('.section');
+
+window.addEventListener('scroll', () => {
+sections.forEach(sec => {
+if(sec.getBoundingClientRect().top < window.innerHeight - 100){
+sec.classList.add('visible');
+}
+});
+});
+
+/* PARTICLE BACKGROUND */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<80;i++){
+particles.push({
+x: Math.random()*canvas.width,
+y: Math.random()*canvas.height,
+vx: (Math.random()-0.5),
+vy: (Math.random()-0.5)
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+p.x += p.vx;
+p.y += p.vy;
+
+if(p.x<0||p.x>canvas.width) p.vx*=-1;
+if(p.y<0||p.y>canvas.height) p.vy*=-1;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,2,0,Math.PI*2);
+ctx.fillStyle="#e57373";
+ctx.fill();
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
