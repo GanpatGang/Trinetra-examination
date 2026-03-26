@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <meta charset="UTF-8">
 <title>Trinetra Presentation</title>
@@ -29,6 +30,84 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     transition: 0.3s;
     z-index: 1;
+}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px) {
+
+    /* HEADER */
+    .header {
+        padding: 10px 15px;
+    }
+
+    .header img {
+        height: 35px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    /* HERO */
+    .hero {
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 22px;
+    }
+
+    /* PPT */
+    .ppt-wrapper {
+        width: 95%;
+    }
+
+    /* CONTENT */
+    .content {
+        padding: 25px;
+    }
+
+    /* TEXT */
+    .section h2 {
+        font-size: 22px;
+    }
+
+    .section p,
+    ul {
+        font-size: 15px;
+    }
+
+    /* CARDS */
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    /* TABLE */
+    table {
+        min-width: 700px;
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    /* TEAM */
+    .member {
+        width: 90%;
+        max-width: 260px;
+    }
+
+    .member.center {
+        transform: scale(1.05);
+    }
+
 }
 
 /* SOFT SPARKLE BORDER */
