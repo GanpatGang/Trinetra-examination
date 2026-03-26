@@ -262,31 +262,39 @@ iframe {
 .section p {
     font-size: 18px;
 }
-
-/* MOBILE TEAM PERFECT CENTER FIX */
+/* ================= MOBILE TEAM CUSTOM LAYOUT ================= */
 @media (max-width: 768px) {
 
     .team-grid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        justify-items: center;
     }
 
-    /* ALL MEMBERS CENTER */
-    .member {
-        width: 90%;
-        max-width: 260px;
-        text-align: center;
-    }
-
-    /* LEADER ALWAYS FIRST */
+    /* LEADER FULL WIDTH TOP */
     .member.center {
-        order: -1;
+        grid-column: span 2;
+        order: 1;
         transform: scale(1.1);
-        margin-bottom: 20px;
-        align-self: center;
+    }
+
+    /* SECOND ROW: AYUSH + MAHEK */
+    .member:nth-child(1) {
+        order: 2;
+    }
+
+    .member:nth-child(4) {
+        order: 3;
+    }
+
+    /* THIRD ROW: MANTRA + KAVY */
+    .member:nth-child(2) {
+        order: 4;
+    }
+
+    .member:nth-child(5) {
+        order: 5;
     }
 
 }
