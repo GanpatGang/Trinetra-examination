@@ -446,6 +446,24 @@ li {
     text-align: center;
 }
 
+/* DEFAULT (PC) */
+.logo-mobile {
+    display: none;
+}
+
+/* MOBILE SWITCH */
+@media (max-width: 768px) {
+
+    .logo-pc {
+        display: none;
+    }
+
+    .logo-mobile {
+        display: block;
+        height: 32px;
+    }
+
+}
 /* ANIMATION */
 @keyframes fadeUp {
     from {opacity:0; transform: translateY(40px);}
@@ -468,10 +486,13 @@ li {
 
     <div class="title">TRINETRA</div>
 
-    <a href="qa.html">
-        <img src="university_logo.png" style="cursor:pointer;">
-    </a>
+   <a href="qa.html">
+    <!-- PC LOGO -->
+    <img src="university_logo.png" class="logo-pc">
 
+    <!-- MOBILE SMALL LOGO -->
+    <img src="university_logo_small.png" class="logo-mobile">
+</a>
 </div>
 
 <!-- HERO -->
