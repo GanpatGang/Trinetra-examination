@@ -454,7 +454,7 @@ li {
     /* BACKGROUND TEXT */
 .bg-text {
     position: fixed;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 120px;
@@ -499,7 +499,9 @@ li {
 <body>
 
 <canvas id="bg"></canvas>
+        <canvas id="textCanvas" style="display:none;"></canvas>
     <div class="bg-text">TRINETRA</div>
+
 
 <!-- HEADER -->
 <div class="header">
@@ -686,45 +688,79 @@ sec.classList.add('visible');
 }
 });
 });
+/* ================= TEXT FORM PARTICLES ================= */
 
-    /* ================= ADVANCED BACKGROUND ================= */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
+
+const textCanvas = document.getElementById("textCanvas");
+const textCtx = textCanvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let particles = [];
-let mouse = { x: null, y: null };
+textCanvas.width = canvas.width;
+textCanvas.height = canvas.height;
 
-window.addEventListener("mousemove", (e) => {
-    mouse.x = e.x;
-    mouse.y = e.y;
+let particles = [];
+let textParticles = [];
+let showText = false;
+
+/* FIX RESIZE */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    textCanvas.width = canvas.width;
+    textCanvas.height = canvas.height;
+    createText();
 });
 
+/* CREATE TEXT DOT SHAPE */
+function createText() {
+    textCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+
+    textCtx.font = "bold 120px Poppins";
+    textCtx.fillStyle = "white";
+    textCtx.textAlign = "center";
+
+    textCtx.fillText("TRINETRA", textCanvas.width / 2, textCanvas.height / 2);
+
+    const data = textCtx.getImageData(0, 0, textCanvas.width, textCanvas.height).data;
+
+    textParticles = [];
+
+    for (let y = 0; y < textCanvas.height; y += 6) {
+        for (let x = 0; x < textCanvas.width; x += 6) {
+
+            const index = (y * textCanvas.width + x) * 4;
+
+            if (data[index + 3] > 128) {
+                textParticles.push({ x, y });
+            }
+        }
+    }
+}
+
+createText();
+
+/* PARTICLE CLASS */
 class Particle {
-    constructor() {
+    constructor(i) {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 1.5;
-        this.vy = (Math.random() - 0.5) * 1.5;
+        this.baseX = this.x;
+        this.baseY = this.y;
         this.size = 2;
+        this.index = i;
     }
 
     update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-        let dx = this.x - mouse.x;
-        let dy = this.y - mouse.y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 120) {
-            this.x += dx / 10;
-            this.y += dy / 10;
+        if (showText && textParticles[this.index]) {
+            this.x += (textParticles[this.index].x - this.x) * 0.06;
+            this.y += (textParticles[this.index].y - this.y) * 0.06;
+        } else {
+            this.x += (this.baseX - this.x) * 0.02;
+            this.y += (this.baseY - this.y) * 0.02;
         }
     }
 
@@ -736,29 +772,26 @@ class Particle {
     }
 }
 
-for (let i = 0; i < 100; i++) {
-    particles.push(new Particle());
-}
-
-function connect() {
-    for (let a = 0; a < particles.length; a++) {
-        for (let b = a; b < particles.length; b++) {
-            let dx = particles[a].x - particles[b].x;
-            let dy = particles[a].y - particles[b].y;
-            let dist = dx * dx + dy * dy;
-
-            if (dist < 10000) {
-                ctx.strokeStyle = "rgba(231,76,60,0.1)";
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particles[a].x, particles[a].y);
-                ctx.lineTo(particles[b].x, particles[b].y);
-                ctx.stroke();
-            }
-        }
+/* CREATE PARTICLES MATCHING TEXT */
+function initParticles() {
+    particles = [];
+    for (let i = 0; i < textParticles.length; i++) {
+        particles.push(new Particle(i));
     }
 }
 
+initParticles();
+
+/* SCROLL TRIGGER */
+const hero = document.querySelector(".hero");
+
+window.addEventListener("scroll", () => {
+    const rect = hero.getBoundingClientRect();
+
+    showText = rect.top < window.innerHeight && rect.bottom > 0;
+});
+
+/* ANIMATION */
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -767,7 +800,6 @@ function animate() {
         p.draw();
     });
 
-    connect();
     requestAnimationFrame(animate);
 }
 
